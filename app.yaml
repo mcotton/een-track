@@ -1,4 +1,4 @@
-application: een-awesome 
+application: een-track
 version: app-1
 runtime: python27
 api_version: 1
@@ -28,6 +28,12 @@ handlers:
 - url: /robots.txt
   static_files: templates/_images/robots.txt
   upload: templates/_images/favicon.ico
+
+- url: /t
+  static_files: templates/_js/jquery.tracker.js
+  upload: templates/_images/favicon.ico
+  http_headers:
+    Access-Control-Allow-Origin: '*'
 
 - url: /.*
   script: main.app
