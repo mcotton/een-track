@@ -50,37 +50,31 @@ class MainHandler(webapp2.RequestHandler):
     render_template(self, 'templates/index.html', template_values)
 
 class UploadHandler(webapp2.RequestHandler):
+  def get(self, resource=''):
+    template_values = {
+        'error_code': 'ERR0005'
+    }
+    render_template(self, 'templates/viper.html', template_values)
+    
   def post(self, resource='not supplied'):
     account = Accounts()
     account.name = resource
     account.ua_string = self.request.headers['User-Agent']
     account.remote_addr = self.request.remote_addr
+    account.body = self.request.body
     # these headers are only when deployed
-    if not is_local():
-      account.country = self.request.headers['X-AppEngine-Country']
-      account.region = self.request.headers['X-AppEngine-Region']
-      account.city = self.request.headers['X-AppEngine-City']
-      account.latlong = self.request.headers['X-AppEngine-CityLatLong']
-    try:
-      json_in = simplejson.loads(self.request.body)
-      if 'startup' in json_in:
-        account.startup = json_in['startup']
-      if 'initialPollingState' in json_in:
-        account.initialPollingState = json_in['initialPollingState']
-      if 'startPolling' in json_in:
-        account.startPolling = json_in['startPolling']
-      if 'useable' in json_in:
-        account.useable = json_in['useable']
-    except ValueError, AttributeError:
-      pass
+    #if not is_local():
+    #  account.country = self.request.headers['X-AppEngine-Country']
+    #  account.region = self.request.headers['X-AppEngine-Region']
+    #  account.city = self.request.headers['X-AppEngine-City']
+    #  account.latlong = self.request.headers['X-AppEngine-CityLatLong']
 
     account.put()
+    template_values = {
+        'error_code': 'ERR0000'
+    }
+    render_template(self, 'templates/viper.html', template_values)
 
-  def options(self):
-    #self.response.headers['Access-Control-Allow-Origin'] = self.request.headers['Origin']
-    #self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
-    #self.response.headers['Access-Control-Allow-Methods'] = 'POST'
-    self.response.out.write('test')
 
 def is_local():
   # Turns on debugging error messages if on local env

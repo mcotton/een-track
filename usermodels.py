@@ -15,3 +15,4 @@ class Accounts(db.Model):
   region = db.StringProperty()
   city = db.StringProperty()
   latlong = db.StringProperty()
+  body = db.TextProperty()
