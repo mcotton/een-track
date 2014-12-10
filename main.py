@@ -75,16 +75,19 @@ class UploadHandler(webapp2.RequestHandler):
 
     soup = BeautifulSoup(self.request.body)
 
-    account.SystemName = soup.find('SystemName').string
-    account.PlateNumber = soup.find('PlateNumber').string
-    account.cameraname = soup.find('CameraName').string
-    account.GMTDateTime = soup.find('GMTDateTime').string
-    account.DateTime = soup.find('DateTime').string
-    account.Longitude = soup.find('Longitude').string
-    account.Latitude = soup.find('Latitude').string
-    account.CharHeight = soup.find('CharHeight').string
-    account.CarImage = soup.find('CarImage').string
-    account.PlateImage = soup.find('PlateImage').string
+    try:
+      account.SystemName = soup.find('SystemName').string
+      account.PlateNumber = soup.find('PlateNumber').string
+      account.cameraname = soup.find('CameraName').string
+      account.GMTDateTime = soup.find('GMTDateTime').string
+      account.DateTime = soup.find('DateTime').string
+      account.Longitude = soup.find('Longitude').string
+      account.Latitude = soup.find('Latitude').string
+      account.CharHeight = soup.find('CharHeight').string
+      account.CarImage = soup.find('CarImage').string
+      account.PlateImage = soup.find('PlateImage').string
+    except AttributeError as e:
+      logging.error('attribute error:', self.request.body)
 
     account.put()
     template_values = {
