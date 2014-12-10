@@ -11,6 +11,10 @@ import os
 import re
 import logging
 
+import sys
+sys.path.insert(0, 'libs')
+from bs4 import BeautifulSoup
+
 from google.appengine.ext.webapp import template
 
 import webapp2
@@ -68,6 +72,19 @@ class UploadHandler(webapp2.RequestHandler):
     #  account.region = self.request.headers['X-AppEngine-Region']
     #  account.city = self.request.headers['X-AppEngine-City']
     #  account.latlong = self.request.headers['X-AppEngine-CityLatLong']
+
+    soup = BeautifulSoup(self.request.body)
+
+    account.SystemName = soup.find('SystemName').string
+    account.PlateNumber = soup.find('PlateNumber').string
+    account.cameraname = soup.find('CameraName').string
+    account.GMTDateTime = soup.find('GMTDateTime').string
+    account.DateTime = soup.find('DateTime').string
+    account.Longitude = soup.find('Longitude').string
+    account.Latitude = soup.find('Latitude').string
+    account.CharHeight = soup.find('CharHeight').string
+    account.CarImage = soup.find('CarImage').string
+    account.PlateImage = soup.find('PlateImage').string
 
     account.put()
     template_values = {
