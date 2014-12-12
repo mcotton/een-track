@@ -73,21 +73,25 @@ class UploadHandler(webapp2.RequestHandler):
     #  account.city = self.request.headers['X-AppEngine-City']
     #  account.latlong = self.request.headers['X-AppEngine-CityLatLong']
 
+    logging.info('creating soup object')
     soup = BeautifulSoup(self.request.body)
 
     try:
-      account.SystemName = soup.find('SystemName').string
-      account.PlateNumber = soup.find('PlateNumber').string
-      account.cameraname = soup.find('CameraName').string
-      account.GMTDateTime = soup.find('GMTDateTime').string
-      account.DateTime = soup.find('DateTime').string
-      account.Longitude = soup.find('Longitude').string
-      account.Latitude = soup.find('Latitude').string
-      account.CharHeight = soup.find('CharHeight').string
-      account.CarImage = soup.find('CarImage').string
-      account.PlateImage = soup.find('PlateImage').string
-    except AttributeError as e:
-      logging.error('attribute error:', self.request.body)
+      logging.info('starting xml parsing')
+      account.SystemName = soup.find('systemname').string
+      account.PlateNumber = soup.find('platenumber').string
+      account.cameraname = soup.find('cameraname').string
+      account.GMTDateTime = soup.find('gmtdatetime').string
+      account.DateTime = soup.find('datetime').string
+      account.Longitude = soup.find('longitude').string
+      account.Latitude = soup.find('latitude').string
+      account.CharHeight = soup.find('charheight').string
+      account.CarImage = soup.find('carimage').string
+      account.PlateImage = soup.find('plateimage').string
+      logging.info('done xml parsing')
+    except AttributeError, TypeError:
+      logging.info('error:', self.request.body)
+      pass
 
     account.put()
     template_values = {
