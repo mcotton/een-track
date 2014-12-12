@@ -78,16 +78,16 @@ class UploadHandler(webapp2.RequestHandler):
 
     try:
       logging.info('starting xml parsing')
-      account.SystemName = soup.find('systemname').string
-      account.PlateNumber = soup.find('platenumber').string
-      account.cameraname = soup.find('cameraname').string
-      account.GMTDateTime = soup.find('gmtdatetime').string
-      account.DateTime = soup.find('datetime').string
-      account.Longitude = soup.find('longitude').string
-      account.Latitude = soup.find('latitude').string
-      account.CharHeight = soup.find('charheight').string
-      account.CarImage = soup.find('carimage').string
-      account.PlateImage = soup.find('plateimage').string
+      account.SystemName = str(soup.find('systemname').string)
+      account.PlateNumber = str(soup.find('platenumber').string)
+      account.cameraname = str(soup.find('cameraname').string)
+      account.GMTDateTime = str(soup.find('gmtdatetime').string)
+      account.DateTime = str(soup.find('datetime').string)
+      account.Longitude = str(soup.find('longitude').string)
+      account.Latitude = str(soup.find('latitude').string)
+      account.CharHeight = str(soup.find('charheight').string)
+      account.CarImage = str(soup.find('carimage').string)
+      account.PlateImage = str(soup.find('plateimage').string)
       logging.info('done xml parsing')
     except AttributeError, TypeError:
       logging.info('error:', self.request.body)

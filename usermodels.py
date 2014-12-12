@@ -20,5 +20,5 @@ class Accounts(db.Model):
   Longitude = db.StringProperty()
   Latitude = db.StringProperty()
   CharHeight = db.StringProperty()
-  CarImage = db.StringProperty()
-  PlateImage = db.StringProperty()
+  CarImage = db.TextProperty()
+  PlateImage = db.TextProperty()
