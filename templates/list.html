@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block container %}
+
+    <table>
+        <thead>
+            <th>Plate Number</th>
+            <th>Date/Time</th>
+            <th>Plate Image</th>
+        </thead>
+        {% for r in accounts %}
+        <tr>
+            <td>{{r.PlateNumber}}</td>
+            <td>{{r.DateTime}}</td>
+            <td><img src="data:image/jpeg;base64, {{r.PlateImage}}"></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+

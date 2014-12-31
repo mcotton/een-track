@@ -29,21 +29,14 @@ een = EagleEye()
 
 class MainHandler(webapp2.RequestHandler):
   def get(self, resource=''):
-    #Check to see if user is an admin, and display correct link
-    admin = users.is_current_user_admin()
-    if admin:
-      admin_url = users.create_logout_url("/")
-      admin_url_text = 'Logout'
-    else:
-      admin_url = users.create_login_url("/")
-      admin_url_text = 'Login'
+
+    accounts = Accounts().all().fetch(10)    
 
     template_values = {
-      'admin_url': admin_url,
-      'admin_url_text': admin_url_text
+      'accounts': accounts
     }
 
-    render_template(self, 'templates/index.html', template_values)
+    render_template(self, 'templates/list.html', template_values)
 
 class UploadHandler(webapp2.RequestHandler):
   def get(self, resource=''):
